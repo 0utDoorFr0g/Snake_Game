@@ -119,6 +119,7 @@ public:
   void setCurrentMap(int num);
   void snakeInitialize();
   void gameTimeFlow();
+  void snakeChangeDirection(int dir);
 };
 
 #endif

@@ -68,7 +68,9 @@ void gameMap::gameTimeFlow()
     //꼬리부분 0으로 바꾸기
     currentMap[tempY][tempX] = 0;
   }
+}
 
-
-
+void gameMap::snakeChangeDirection(int dir)
+{
+  snakeOnMap.changeDirection(dir);
 }

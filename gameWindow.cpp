@@ -87,6 +87,8 @@ int main()
   //아이템에 부딪히는 것과 벽과 부딪히는 것은 아직 실패 스크린을 구상하지 않았기에 비어있는 if문으로 처리를 했다.
   getch();
   mapControl.gameTimeFlow();
+  mapControl.snakeChangeDirection(3);
+  mapControl.gameTimeFlow();
   for (int i = 0; i < 21; i++)
   {
     for (int j = 0; j < 21; j++)
