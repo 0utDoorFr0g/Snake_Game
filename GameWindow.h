@@ -1,0 +1,5 @@
+class GameWindow
+{
+public:
+  GameWindow();
+};
