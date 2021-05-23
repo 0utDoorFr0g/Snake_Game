@@ -21,6 +21,7 @@ int main(int argc, char * argv[])
   printw(p1.c_str());
   printw(p2.c_str());
   refresh();
+  halfdelay(100); // delay set 10 second
   getch();
   endwin();
   return 0;
