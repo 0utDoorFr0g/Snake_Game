@@ -24,7 +24,7 @@ int custom_getch_tick()
    {
      string p2 = "usleep : " + to_string(TIME_TICK - duration) + "\n";
      printw(p2.c_str());
-     usleep(TIME_TICK - duration);
+     usleep((TIME_TICK - duration)*1000);
      return ch;
    }
 }
