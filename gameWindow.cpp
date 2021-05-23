@@ -41,26 +41,29 @@ int main()
 
   //map 표시 시작
   //0은 빈공간(\u2B1C), 1은 wall, 2는 immune wall (\u2B1B), 3은 snake 머리, 4는 몸통 (\u2B1A)
-  for (int i = 0; i < 21; i++)
+  int emptySquare;
+  for (int h = 0; h < 21; h++)
   {
-    for (int j = 0; j < 21; j++)
+    for (int w = 0; w < 21; w++)
     {
-      if(mapControl.getCurrentMapPosition(i,j) == 0)
+      if(mapControl.getCurrentMapPosition(h,w) == 0)
       {
-        mvwprintw(gameScreen,j,2*i," ");
+        mvwprintw(gameScreen,h,2*w," ");
       }
-      else if(mapControl.getCurrentMapPosition(i,j) == 1 || mapControl.getCurrentMapPosition(i,j) == 2)
+      else if(mapControl.getCurrentMapPosition(h,w) == 1 || mapControl.getCurrentMapPosition(h,w) == 2)
       {
-        mvwprintw(gameScreen,j,2*i,"\u25A1");
+        mvwprintw(gameScreen,h,2*w,"\u25A1");
       }
-      else if(mapControl.getCurrentMapPosition(i,j) == 3)
+      else if(mapControl.getCurrentMapPosition(h,w) == 3)
       {
-        mvwprintw(gameScreen,j,2*i,"\u25CC");
+        mvwprintw(gameScreen,h,2*w,"\u25CC");
       }
-      else if(mapControl.getCurrentMapPosition(i,j) == 4)
+      else if(mapControl.getCurrentMapPosition(h,w) == 4)
       {
-        mvwprintw(gameScreen,j,2*i,"\u25CB");
+        mvwprintw(gameScreen,h,2*w,"\u25CB");
       }
+      emptySquare = 2*w - 1;
+      mvwprintw(gameScreen,h,emptySquare," ");
     }
   }
   wrefresh(gameScreen);
@@ -100,25 +103,25 @@ int main()
     else if (ch == KB_W)
       mapControl.snakeChangeDirection(4);
     mapControl.gameTimeFlow();
-    for (int i = 0; i < 21; i++)
+    for (int h = 0; h < 21; h++)
     {
-      for (int j = 0; j < 21; j++)
+      for (int w = 0; w < 21; w++)
       {
-        if(mapControl.getCurrentMapPosition(i,j) == 0)
+        if(mapControl.getCurrentMapPosition(h,w) == 0)
         {
-          mvwprintw(gameScreen,j,2*i," ");
+          mvwprintw(gameScreen,h,2*w," ");
         }
-        else if(mapControl.getCurrentMapPosition(i,j) == 1 || mapControl.getCurrentMapPosition(i,j) == 2)
+        else if(mapControl.getCurrentMapPosition(h,w) == 1 || mapControl.getCurrentMapPosition(h,w) == 2)
         {
-          mvwprintw(gameScreen,j,2*i,"\u25A1");
+          mvwprintw(gameScreen,h,2*w,"\u25A1");
         }
-        else if(mapControl.getCurrentMapPosition(i,j) == 3)
+        else if(mapControl.getCurrentMapPosition(h,w) == 3)
         {
-          mvwprintw(gameScreen,j,2*i,"\u25CC");
+          mvwprintw(gameScreen,h,2*w,"\u25CC");
         }
-        else if(mapControl.getCurrentMapPosition(i,j) == 4)
+        else if(mapControl.getCurrentMapPosition(h,w) == 4)
         {
-          mvwprintw(gameScreen,j,2*i,"\u25CB");
+          mvwprintw(gameScreen,h,2*w,"\u25CB");
         }
       }
     }
