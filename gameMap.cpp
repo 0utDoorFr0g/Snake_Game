@@ -15,7 +15,7 @@ gameMap::gameMap()
   snakeInitialize();
 }
 
-int gameMap::getCurrentMapPosition(int x, int y)
+int gameMap::getCurrentMapPosition(int y, int x)
 {
   return currentMap[y][x];
 }
