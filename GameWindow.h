@@ -1,5 +1,0 @@
-class GameWindow
-{
-public:
-  GameWindow();
-};

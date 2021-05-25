@@ -17,13 +17,11 @@ int custom_getch_tick()
    string p1 = "getch execution time : " + to_string(duration) + "\n";
    if(duration >= TIME_TICK)
    {
-     printw(p1.c_str());
      return ch;
    }
    else
    {
      string p2 = "usleep : " + to_string(TIME_TICK - duration) + "\n";
-     printw(p2.c_str());
      usleep((TIME_TICK - duration)*1000);
      return ch;
    }
