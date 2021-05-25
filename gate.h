@@ -1,15 +1,16 @@
-#ifndef _GAMEMAP_H_
-#define _GAMEMAP_H_
+#ifndef _GATE_H_
+#define _GATE_H_
 #include <iostream>
-#include <ncurses.h>
-#include "snake.h"
-#include "gate.h"
+#include <cstdlib>
+#include <ctime>
+#include <vector>
 #include "Position.h"
 
-class gameMap
+using namespace std;
+
+class gate
 {
 private:
-  //실질적인 map을 담는 배열 //0,height,width이다.
   int map[4][21][21]{
     {
       {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2},
@@ -104,33 +105,25 @@ private:
       {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2}
     }
   };
-  const int MAP_WIDTH = 21;//맵의 크기
-  const int MAP_HEIGHT = 21;//맵의 크기
-  int mapVariaty = 4;//맵의 총 개수
-  int currentMap[21][21] = {0};
-  snake snakeOnMap;//snake 클래스 객체
-  gate gateOnMap;//gate 클래스 객체
-  int mapNum;//현재 currentMap이 몇번째 map을 기반으로 하고 있는지!
+  int mapDataNum;
+  vector<Position> mapWallData;
+  Position firstGate;
+  Position secondGate;
+  int wallCount;//currentMapData 안에 1 (보통 벽)의 개수를 저장.
+  bool isSnakeEnteringGateVar = false;
+  bool gateExist;
 
 public:
-  gameMap();//생성자
-  int (*getCurrentMap())[21]
-  {
-    return currentMap;
-  };
-  int getCurrentMapPosition(int x, int y);//currentmap의 특정 좌표가 무엇인지 리턴
-  void setCurrentMap(int num);
-  void snakeInitialize();
-  int gameTimeFlow();
-
-  void snakeChangeDirection(int dir);
-  int getSnakeLength();
-  int getSnakeDirection();
-
+  gate();
   void gateInitialize(int mapNum);
-  void gateGenerateOnMap();
-  void gateDegenerateOnMap();
-  bool isGateOnMap();
+  void gateGenerate();
+  void gateDegenerate();
+  int gateEntering(int snakeDirection);
+  Position getFirstGate();
+  Position getSecondGate();
+  bool isSnakeEnteringGate();
+  bool isGateExist();
+
 };
 
 #endif

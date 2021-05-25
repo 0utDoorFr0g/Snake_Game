@@ -16,15 +16,7 @@ snake::snake()
 //방향을 바꾸는 메소드, 동서남북을 각각 1234로 표시하며, 이동한 맵의 좌표에 대한 정보가 mapType으로 주어진다.
 void snake::changeDirection(int dir)
 {
-
-  if (this->direction == dir)
-  {
-    //error 발생
-  }
-  else
-  {
-    this->direction = dir;
-  }
+  this->direction = dir;
 }
 
 void snake::snakeGo()
@@ -68,7 +60,7 @@ int snake::getSnakePosY(int index)
   return snakePosition[index].getPosY();
 }
 
-int snake::getSnakeLength()
+int snake::getLength()
 {
   return snakePosition.size();
 }
