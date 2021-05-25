@@ -12,7 +12,8 @@ private:
   int type;
 
 public:
-  Position(int py=0, int px=0, int ptype=0);
+  Position();
+  Position(int py, int px, int ptype);
   int getPosX();
   int getPosY();
   int getType();

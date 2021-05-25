@@ -50,6 +50,18 @@ void snake::snakeGo()
 
 }
 
+void snake::snakeGrow(int py, int px)
+{
+  snakePosition.push_back(Position(py, px, 4));
+  snakeLength = snakePosition.size();
+}
+
+void snake::snakePoison()
+{
+  snakePosition.erase(snakePosition.end()-1);
+  snakeLength = snakePosition.size();
+}
+
 int snake::getSnakePosX(int index)
 {
   return snakePosition[index].getPosX();

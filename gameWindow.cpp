@@ -64,6 +64,18 @@ int main()
       {
         mvwprintw(gameScreen,h,2*w,"\u25CB");
       }
+      else if(mapControl.getCurrentMapPosition(h,w) == 5)
+      {
+        mvwprintw(gameScreen,h,2*w,"\u25B2");
+      }
+      else if(mapControl.getCurrentMapPosition(h,w) == 6)
+      {
+        mvwprintw(gameScreen,h,2*w,"\u25B3");
+      }
+      else if(mapControl.getCurrentMapPosition(h,w) == 7)
+      {
+        mvwprintw(gameScreen,h,2*w,"\u25A6");
+      }
       emptySquare = 2*w - 1;
       mvwprintw(gameScreen,h,emptySquare," ");
     }
@@ -176,6 +188,14 @@ int main()
         {
           mvwprintw(gameScreen,h,2*w,"\u25CB");
         }
+        else if(mapControl.getCurrentMapPosition(h,w) == 5)
+        {
+          mvwprintw(gameScreen,h,2*w,"\u25B2");
+        }
+        else if(mapControl.getCurrentMapPosition(h,w) == 6)
+        {
+          mvwprintw(gameScreen,h,2*w,"\u25B3");
+        }
         else if(mapControl.getCurrentMapPosition(h,w) == 7)
         {
           mvwprintw(gameScreen,h,2*w,"\u25A6");
@@ -197,7 +217,7 @@ int main()
       getch();
       break;
     }
-    else if ((state == 3) && (mapControl.getSnakeLength() < 3))
+    else if ((state == 2) && (mapControl.getSnakeLength() < 3))
     {
       wrefresh(failScreen);
       break;
