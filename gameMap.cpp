@@ -36,6 +36,7 @@ void gameMap::setCurrentMap(int num)
     }
   }
   mapNum = num;
+  gateOnMap.gateInitialize(num);
 }
 
 void gameMap::snakeInitialize()
@@ -146,6 +147,24 @@ int gameMap::gameTimeFlow()
     }
     snakeOnMap.snakeGrow(tempY, tempX);
   }
+  else if (currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] == 7)//gate
+  {
+    state = 4;
+    //뱀 머리의 방향을 바꾼다.
+    snakeOnMap.changeDirection(gateOnMap.gateEntering(snakeOnMap.getDirection(),snakeOnMap.getSnakePosY(0),snakeOnMap.getSnakePosX(0),snakeOnMap.getLength()));
+    //뱀머리의 위치를 바꾼다.
+    if ((snakeOnMap.getSnakePosY(0) == gateOnMap.getFirstGate().getPosY()) && (snakeOnMap.getSnakePosX(0) == gateOnMap.getFirstGate().getPosX()))
+    {
+      snakeOnMap.setSnakeHeadX(gateOnMap.getSecondGate().getPosX());
+      snakeOnMap.setSnakeHeadY(gateOnMap.getSecondGate().getPosY());
+    }
+    else
+    {
+      snakeOnMap.setSnakeHeadX(gateOnMap.getFirstGate().getPosX());
+      snakeOnMap.setSnakeHeadY(gateOnMap.getFirstGate().getPosY());
+    }
+    currentMap[tempY][tempX] = 0;
+  }
   else
   { //머리 부분 currentMap 반영
     currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] = 3;
@@ -157,6 +176,12 @@ int gameMap::gameTimeFlow()
     //꼬리부분 0으로 바꾸기
     currentMap[tempY][tempX] = 0;
     state = 0;
+  }
+
+  if (gateOnMap.gateSnakeEnteringCount())
+  {
+    currentMap[gateOnMap.getFirstGate().getPosY()][gateOnMap.getFirstGate().getPosX()] = 7;
+    currentMap[gateOnMap.getSecondGate().getPosY()][gateOnMap.getSecondGate().getPosX()] = 7;
   }
   return state;
 }

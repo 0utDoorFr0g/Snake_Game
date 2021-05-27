@@ -110,20 +110,23 @@ private:
   Position firstGate;
   Position secondGate;
   int wallCount;//currentMapData 안에 1 (보통 벽)의 개수를 저장.
-  bool isSnakeEnteringGateVar = false;
+  bool SnakeEnteringGate = false;
   bool gateExist;
+
+  //내부구현 필요 메소드
+  int snakeLength;
 
 public:
   gate();
   void gateInitialize(int mapNum);
   void gateGenerate();
   void gateDegenerate();
-  int gateEntering(int snakeDirection);
+  int gateEntering(int snakeDirection, int py, int px, int snakeLength);
   Position getFirstGate();
   Position getSecondGate();
   bool isSnakeEnteringGate();
   bool isGateExist();
-
+  bool gateSnakeEnteringCount();
 };
 
 #endif

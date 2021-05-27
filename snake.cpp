@@ -81,3 +81,14 @@ int snake::getDirection()
 {
   return direction;
 }
+
+
+void snake::setSnakeHeadX(int px)
+{
+  snakePosition[0].setPosX(px);
+}
+
+void snake::setSnakeHeadY(int py)
+{
+  snakePosition[0].setPosY(py);
+}

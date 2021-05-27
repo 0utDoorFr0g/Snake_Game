@@ -21,6 +21,8 @@ public:
   void snakePoison();
   int getSnakePosX(int index);//snake의 특정 인덱스의 위치를 리턴.
   int getSnakePosY(int index);//snake의 특정 인덱스의 위치를 리턴
+  void setSnakeHeadX(int px);//gate에 들어갔을 때 snake head의 위치를 바꾼다.
+  void setSnakeHeadY(int py);//gate에 들어갔을 때 snake head의 위치를 바꾼다.
   int getLength();
   int getDirection();
 };

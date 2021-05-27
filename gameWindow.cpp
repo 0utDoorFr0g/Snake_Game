@@ -108,14 +108,14 @@ int main()
   //중요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //시간 틱이 반복문을 통해 수행한다는 가정하에 단지 gameTimeFlow를 실행하는 것으로 map의 데이터를 바꿀 수 있다!!!
   //아이템에 부딪히는 것과 벽과 부딪히는 것은 아직 실패 스크린을 구상하지 않았기에 비어있는 if문으로 처리를 했다.
-  halfdelay(10);
+  halfdelay(5);
   int ch = 0;
   int state;//정상 0, 벽 만나면 1, poison Item 이면 2, growthItem 3, gate는 4
   int keyBoardState = 0;
   int timeCount = 0;
   while(ch != KB_X)
   {
-    if (timeCount % 10 == 0)
+    if (timeCount % 20 == 0)
     {
       if (mapControl.isGateOnMap() == true)
       {
