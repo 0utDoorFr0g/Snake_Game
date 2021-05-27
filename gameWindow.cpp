@@ -126,8 +126,6 @@ int main()
         mapControl.gateGenerateOnMap();
       }
     }
-
-
     ch = custom_getch_tick();
     if(ch == KB_D)
     {

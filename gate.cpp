@@ -9,6 +9,7 @@ gate::gate()
 
 void gate::gateInitialize(int mapNum)
 {
+  mapWallData.clear();
   mapDataNum = mapNum;
   SnakeEnteringGate = false;
   wallCount = 0;
@@ -16,9 +17,9 @@ void gate::gateInitialize(int mapNum)
   {
     for (int w = 0; w < 21; w++)
     {
-
-      if (map[mapNum][h][w] == 1)
+      if (map[mapDataNum][h][w] == 1)
       {
+        //if (mapDataNum == 0) cout << h << " " << w << endl;
         wallCount++;
         mapWallData.push_back(Position(h,w,4));
       }
