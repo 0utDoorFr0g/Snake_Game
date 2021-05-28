@@ -22,4 +22,5 @@
 // TIME_TICK = 1 second
 #define TIME_TICK 1000
 
+int custom_getch();
 int custom_getch_tick();
