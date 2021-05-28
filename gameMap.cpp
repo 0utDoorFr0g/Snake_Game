@@ -108,7 +108,7 @@ int gameMap::gameTimeFlow()
 
   }
 
-  int state;//정상 0, 벽 만나면 1, poison Item 이면 2, growthItem 3, gate는 4
+  int state;//정상 0, 벽 만나면 1, poison Item 이면 2, growthItem 3, gate는 4, 미션 클리어는 5
   //tempX와 tempY는 snake의 마지막 꼬리의 좌표로 만약 아이템 획득 없이 snake가 전진한다면 이 좌표에 해당하는 currentMap을 0으로 바꿔줘야 한다.
   int tempX = snakeOnMap.getSnakePosX(snakeOnMap.getLength()-1);
   int tempY = snakeOnMap.getSnakePosY(snakeOnMap.getLength()-1);
@@ -193,6 +193,11 @@ int gameMap::gameTimeFlow()
   gameMission.setGateUseMissionClear(gameScore.getUseGate()); // 게이트 미션 해결 확인
   gameMission.setPoisionItemMissionClear(gameScore.getGottenPoisionItem()); // 독 아이템 획득 미션 해결 확인
   gameMission.setGrowItemMissionClear(gameScore.getGottenGrowItem()); // 성장 아이템 획득 미션 해결 확인
+
+  bool isClear = gameMission.isSnakeLengthMissionClear() & gameMission.isGateUseMissionClear() & gameMission.isPoisionItemMissionClear() & gameMission.isGrowItemMissionClear();
+
+  if(isClear == true)
+    state = 5;
 
   return state;
 }
