@@ -12,7 +12,6 @@ private:
   vector<Position> snakePosition;
   int snakeLength;
   int direction;//1은 오른쪽, 2는 오른쪽, 3은 위, 4는 아래.
-
 public:
   snake();
   void changeDirection(int dir);//방향을 바꿈.
@@ -24,7 +23,10 @@ public:
   void setSnakeHeadX(int px);//gate에 들어갔을 때 snake head의 위치를 바꾼다.
   void setSnakeHeadY(int py);//gate에 들어갔을 때 snake head의 위치를 바꾼다.
   int getLength();
+  void setLength(int n);
   int getDirection();
+  void snakePosition_pop_back();
+  Position snakePosition_back();
 };
 
 #endif

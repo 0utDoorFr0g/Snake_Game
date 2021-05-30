@@ -77,6 +77,11 @@ int snake::getLength()
   return snakePosition.size();
 }
 
+void snake::setLength(int n)
+{
+  snakeLength = n;
+}
+
 int snake::getDirection()
 {
   return direction;
@@ -91,4 +96,14 @@ void snake::setSnakeHeadX(int px)
 void snake::setSnakeHeadY(int py)
 {
   snakePosition[0].setPosY(py);
+}
+
+void snake::snakePosition_pop_back()
+{
+  snakePosition.pop_back();
+}
+
+Position snake::snakePosition_back()
+{
+  return snakePosition.back();
 }
