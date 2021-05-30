@@ -1,7 +1,7 @@
 
 #define GROW_ITEM_MISSION 4
 #define POISION_ITEM_MISSON 2
-#define GATE_USE_MISSION 3
+#define GATE_USE_MISSION 1
 #define SNAKE_LENGTH_MISSION 5
 
 class mission
