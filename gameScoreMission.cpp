@@ -77,5 +77,5 @@ int score::getLengthScore()
 
 void score::setLengthScore(int length)
 {
-  lengthScore = ((length / SNAKE_LENGTH_MISSION) * 10);
+  lengthScore = length;
 }

@@ -133,7 +133,9 @@ public:
 
   void snakeChangeDirection(int dir);
   int getSnakeLength();
+  void setSnakeLength(int n);
   int getSnakeDirection();
+  void snakeReset();
 
   void gateInitialize(int mapNum);
   void gateGenerateOnMap();

@@ -73,10 +73,6 @@ void gameMap::itemInitialize()
 }
 
 
-
-
-
-
 int gameMap::gameTimeFlow()
 {
   // item이 Map에 남아있었던 시간을 갱신하고 5 tick 이상 남아있었다면 새로운 위치에 item을 생성한다.
@@ -131,7 +127,7 @@ int gameMap::gameTimeFlow()
     {
       currentMap[snakeOnMap.getSnakePosY(i)][snakeOnMap.getSnakePosX(i)] = 4;
     }
-    //꼬리부분 0으로 바꾸기
+    //꼬리부분 0으로 바꾸기void
     currentMap[tempY][tempX] = 0;
     //snake 길이 줄이기
     currentMap[snakeOnMap.getSnakePosY(snakeOnMap.getLength() - 1)][snakeOnMap.getSnakePosX(snakeOnMap.getLength() - 1)] = 0;
@@ -207,6 +203,11 @@ void gameMap::snakeChangeDirection(int dir)
   snakeOnMap.changeDirection(dir);
 }
 
+void gameMap::setSnakeLength(int n)
+{
+  snakeOnMap.setLength(n);
+}
+
 int gameMap::getSnakeLength()
 {
   return snakeOnMap.getLength();
@@ -242,4 +243,14 @@ void gameMap::gateDegenerateOnMap()
 bool gameMap::isGateOnMap()
 {
   return gateOnMap.isGateExist();
+}
+
+void gameMap::snakeReset()
+{
+  while(snakeOnMap.getLength() != 3)
+  {
+    Position temp = snakeOnMap.snakePosition_back();
+    currentMap[temp.getPosY()][temp.getPosX()] = 0;
+    snakeOnMap.snakePosition_pop_back();
+  }
 }

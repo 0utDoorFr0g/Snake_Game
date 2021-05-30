@@ -122,12 +122,24 @@ int main()
                   mvwprintw(gameScreen, h, 2 * w, " ");
 
             mvwprintw(gameScreen, 10, 5, "Game Clear!");
+            wrefresh(gameScreen);
 
             getchar();
 
             srand((unsigned int)time(NULL));
             mapControl.setCurrentMap(rand() % 4);
+            mapControl.snakeReset();
             mapControl.snakeInitialize();
+
+            mapControl.gameMission.setGrowItemMissionClear(0);
+            mapControl.gameMission.setPoisionItemMissionClear(0);
+            mapControl.gameMission.setGateUseMissionClear(0);
+            mapControl.gameMission.setSnakeLengthMissionClear(3);
+
+            mapControl.gameScore.setGottenGrowItem(0);
+            mapControl.gameScore.setGottenPoisionItem(0);
+            mapControl.gameScore.setUseGate(0);
+            mapControl.gameScore.setLengthScore(3);
 
             int emptySquare;
             for (int h = 0; h < 21; h++)
@@ -181,7 +193,7 @@ int main()
             int ch = 0;
             int keyBoardState = 0;
             int timeCount = 0;
-            while (ch != KB_X)
+            while (ch != KB_X && state != 5)
             {
                 if (timeCount % 20 == 0)
                 {
@@ -329,6 +341,11 @@ int main()
                     wrefresh(gameScreen);
                 }
                 timeCount++;
+
+                bool isClear = mapControl.gameMission.isSnakeLengthMissionClear() & mapControl.gameMission.isGateUseMissionClear() & mapControl.gameMission.isPoisionItemMissionClear() & mapControl.gameMission.isGrowItemMissionClear();
+
+                if(isClear == true)
+                  state = 5;
             }
         }
     }
