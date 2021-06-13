@@ -6,6 +6,7 @@ using namespace std;
 Position::Position() : x(0), y(0), type(0){}
 Position::Position(int py, int px, int ptype): x(px), y(py), type(ptype){}
 
+
 int Position::getPosX()
 {
   return this->x;

@@ -1,3 +1,5 @@
+#include <iostream>
+#include <vector>
 #include "gameMap.h"
 
 
@@ -11,6 +13,7 @@ gameMap::gameMap()
   */
   setCurrentMap(0);
   snakeInitialize();
+  gateOnMap.gateInitialize(mapNum);
 }
 
 int gameMap::getCurrentMapPosition(int y, int x)
@@ -32,16 +35,19 @@ void gameMap::setCurrentMap(int num)
       currentMap[i][j] = map[num][i][j];
     }
   }
+  mapNum = num;
+  gateOnMap.gateInitialize(num);
 }
 
 void gameMap::snakeInitialize()
 {
   currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] = 3;
-  for (int i = 1; i < snakeOnMap.getSnakeLength(); i++)
+  for (int i = 1; i < snakeOnMap.getLength(); i++)
   {
     currentMap[snakeOnMap.getSnakePosY(i)][snakeOnMap.getSnakePosX(i)] = 4;
   }
 }
+
 
 // snake가 위치한 주변에 아이템을 만듬.
 // 참고로 POISION ITEM은 5 GROW ITEM은 6으로 정했음.
@@ -66,12 +72,17 @@ void gameMap::itemInitialize()
   }
 }
 
-void gameMap::gameTimeFlow()
+
+
+
+
+
+int gameMap::gameTimeFlow()
 {
   // item이 Map에 남아있었던 시간을 갱신하고 5 tick 이상 남아있었다면 새로운 위치에 item을 생성한다.
   for(int i=0; i < 3; i++)
   {
-    if(itemOnMap[i].getAge() < 4)
+    if(itemOnMap[i].getAge() < 8)//시간 8tick으로 조정.
       itemOnMap[i].setAge(itemOnMap[i].getAge()+1);
     else
     {
@@ -96,30 +107,123 @@ void gameMap::gameTimeFlow()
     }
 
   }
+
+  int state;//정상 0, 벽 만나면 1, poison Item 이면 2, growthItem 3, gate는 4
   //tempX와 tempY는 snake의 마지막 꼬리의 좌표로 만약 아이템 획득 없이 snake가 전진한다면 이 좌표에 해당하는 currentMap을 0으로 바꿔줘야 한다.
-  int tempX = snakeOnMap.getSnakePosX(snakeOnMap.getSnakeLength()-1);
-  int tempY = snakeOnMap.getSnakePosY(snakeOnMap.getSnakeLength()-1);
+  int tempX = snakeOnMap.getSnakePosX(snakeOnMap.getLength()-1);
+  int tempY = snakeOnMap.getSnakePosY(snakeOnMap.getLength()-1);
   //snake 전진
   snakeOnMap.snakeGo();
 
-  if (currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] != 0)
+  if ((currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] == 1) || (currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] == 2))
   {
-    //아이템 획득 or 벽 부딪힘.
+    state = 1;
+    return state;
   }
-  else
-  { //머리 부분 currentMap 반영
+  else if (currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] == 5)
+  {
+    state = 2;
+    //머리 부분 currentMap 반영
     currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] = 3;
     //몸통과 꼬리 currentMap 반영
-    for (int i = 1; i < snakeOnMap.getSnakeLength(); i++)
+    for (int i = 1; i < snakeOnMap.getLength(); i++)
     {
       currentMap[snakeOnMap.getSnakePosY(i)][snakeOnMap.getSnakePosX(i)] = 4;
     }
     //꼬리부분 0으로 바꾸기
     currentMap[tempY][tempX] = 0;
+    //snake 길이 줄이기
+    currentMap[snakeOnMap.getSnakePosY(snakeOnMap.getLength() - 1)][snakeOnMap.getSnakePosX(snakeOnMap.getLength() - 1)] = 0;
+    snakeOnMap.snakePoison();
   }
+  else if (currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] == 6)
+  {
+    state = 3;
+    currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] = 3;
+    //몸통과 꼬리 currentMap 반영
+    for (int i = 1; i < snakeOnMap.getLength(); i++)
+    {
+      currentMap[snakeOnMap.getSnakePosY(i)][snakeOnMap.getSnakePosX(i)] = 4;
+    }
+    snakeOnMap.snakeGrow(tempY, tempX);
+  }
+  else if (currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] == 7)//gate
+  {
+    state = 4;
+    //뱀 머리의 방향을 바꾼다.
+    snakeOnMap.changeDirection(gateOnMap.gateEntering(snakeOnMap.getDirection(),snakeOnMap.getSnakePosY(0),snakeOnMap.getSnakePosX(0),snakeOnMap.getLength()));
+    //뱀머리의 위치를 바꾼다.
+    if ((snakeOnMap.getSnakePosY(0) == gateOnMap.getFirstGate().getPosY()) && (snakeOnMap.getSnakePosX(0) == gateOnMap.getFirstGate().getPosX()))
+    {
+      snakeOnMap.setSnakeHeadX(gateOnMap.getSecondGate().getPosX());
+      snakeOnMap.setSnakeHeadY(gateOnMap.getSecondGate().getPosY());
+    }
+    else
+    {
+      snakeOnMap.setSnakeHeadX(gateOnMap.getFirstGate().getPosX());
+      snakeOnMap.setSnakeHeadY(gateOnMap.getFirstGate().getPosY());
+    }
+    currentMap[tempY][tempX] = 0;
+  }
+  else
+  { //머리 부분 currentMap 반영
+    currentMap[snakeOnMap.getSnakePosY(0)][snakeOnMap.getSnakePosX(0)] = 3;
+    //몸통과 꼬리 currentMap 반영
+    for (int i = 1; i < snakeOnMap.getLength(); i++)
+    {
+      currentMap[snakeOnMap.getSnakePosY(i)][snakeOnMap.getSnakePosX(i)] = 4;
+    }
+    //꼬리부분 0으로 바꾸기
+    currentMap[tempY][tempX] = 0;
+    state = 0;
+  }
+
+  if (gateOnMap.gateSnakeEnteringCount())
+  {
+    currentMap[gateOnMap.getFirstGate().getPosY()][gateOnMap.getFirstGate().getPosX()] = 7;
+    currentMap[gateOnMap.getSecondGate().getPosY()][gateOnMap.getSecondGate().getPosX()] = 7;
+  }
+  return state;
 }
 
 void gameMap::snakeChangeDirection(int dir)
 {
   snakeOnMap.changeDirection(dir);
+}
+
+int gameMap::getSnakeLength()
+{
+  return snakeOnMap.getLength();
+}
+
+int gameMap::getSnakeDirection()
+{
+  return snakeOnMap.getDirection();
+}
+
+void gameMap::gateInitialize(int mapNum)
+{
+  gateOnMap.gateInitialize(mapNum);
+}
+
+void gameMap::gateGenerateOnMap()
+{
+  gateOnMap.gateGenerate();
+  currentMap[gateOnMap.getFirstGate().getPosY()][gateOnMap.getFirstGate().getPosX()] = 7;
+  currentMap[gateOnMap.getSecondGate().getPosY()][gateOnMap.getSecondGate().getPosX()] = 7;
+}
+
+void gameMap::gateDegenerateOnMap()
+{
+  if (gateOnMap.isSnakeEnteringGate() == false)
+  {
+  currentMap[gateOnMap.getFirstGate().getPosY()][gateOnMap.getFirstGate().getPosX()] = 1;
+  currentMap[gateOnMap.getSecondGate().getPosY()][gateOnMap.getSecondGate().getPosX()] = 1;
+  }
+  gateOnMap.gateDegenerate();
+}
+
+bool gameMap::isGateOnMap()
+{
+  return gateOnMap.isGateExist();
 }

@@ -1,3 +1,4 @@
+
 #include "item.h"
 
 // itemPosition 변수 접근자, 받은 주소를 이용하여 관련 함수를 호출하여 값 제어 가능.
