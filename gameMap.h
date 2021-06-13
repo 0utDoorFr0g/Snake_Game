@@ -2,8 +2,12 @@
 #define _GAMEMAP_H_
 #include <iostream>
 #include <ncurses.h>
+#include <vector>
+#include <cstdlib>
+#include <utility>
 #include "snake.h"
 #include "Position.h"
+#include "item.h"
 
 class gameMap
 {
@@ -108,7 +112,7 @@ private:
   int mapVariaty = 4;//맵의 총 개수
   int currentMap[21][21] = {0};
   snake snakeOnMap;//snake 클래스 객체
-
+  item itemOnMap[3]; // item 클래스 객체
 public:
   gameMap();//생성자
   int (*getCurrentMap())[21]
@@ -118,6 +122,7 @@ public:
   int getCurrentMapPosition(int x, int y);//currentmap의 특정 좌표가 무엇인지 리턴
   void setCurrentMap(int num);
   void snakeInitialize();
+  void itemInitialize();
   void gameTimeFlow();
   void snakeChangeDirection(int dir);
 };

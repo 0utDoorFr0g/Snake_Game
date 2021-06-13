@@ -38,9 +38,10 @@ int main()
   srand((unsigned int)time(NULL));
   mapControl.setCurrentMap(rand()%4);
   mapControl.snakeInitialize();
+  mapControl.itemInitialize();
 
   //map 표시 시작
-  //0은 빈공간(\u2B1C), 1은 wall, 2는 immune wall (\u2B1B), 3은 snake 머리, 4는 몸통 (\u2B1A)
+  //0은 빈공간(\u2B1C), 1은 wall, 2는 immune wall (\u2B1B), 3은 snake 머리, 4는 몸통 (\u2B1A), 5는 독 아이템, 6은 성장 아이템
   int emptySquare;
   for (int h = 0; h < 21; h++)
   {
@@ -61,6 +62,14 @@ int main()
       else if(mapControl.getCurrentMapPosition(h,w) == 4)
       {
         mvwprintw(gameScreen,h,2*w,"\u25CB");
+      }
+      else if(mapControl.getCurrentMapPosition(h,w) == 5)
+      {
+        mvwprintw(gameScreen,h,2*w,"\u2B14");
+      }
+      else if(mapControl.getCurrentMapPosition(h,w) == 6)
+      {
+        mvwprintw(gameScreen,h,2*w,"\u2B15");
       }
       emptySquare = 2*w - 1;
       mvwprintw(gameScreen,h,emptySquare," ");
@@ -123,12 +132,18 @@ int main()
         {
           mvwprintw(gameScreen,h,2*w,"\u25CB");
         }
+        else if(mapControl.getCurrentMapPosition(h,w) == 5)
+        {
+          mvwprintw(gameScreen,h,2*w,"\u2b14");
+        }
+        else if(mapControl.getCurrentMapPosition(h,w) == 6)
+        {
+          mvwprintw(gameScreen,h,2*w,"\u2b15");
+        }
       }
     }
   wrefresh(gameScreen);
   }
-
-
 
   //윈도우 정리
   getch();
