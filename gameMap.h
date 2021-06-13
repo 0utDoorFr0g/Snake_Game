@@ -9,6 +9,7 @@
 #include "gate.h"
 #include "Position.h"
 #include "item.h"
+#include "gameScoreMission.h"
 
 class gameMap
 {
@@ -116,8 +117,9 @@ private:
   gate gateOnMap;//gate 클래스 객체
   item itemOnMap[3]; //item 클래스 객체
   int mapNum;//현재 currentMap이 몇번째 map을 기반으로 하고 있는지!
-
 public:
+  score gameScore;
+  mission gameMission;
   gameMap();//생성자
   int (*getCurrentMap())[21]
   {
@@ -131,7 +133,9 @@ public:
 
   void snakeChangeDirection(int dir);
   int getSnakeLength();
+  void setSnakeLength(int n);
   int getSnakeDirection();
+  void snakeReset();
 
   void gateInitialize(int mapNum);
   void gateGenerateOnMap();
